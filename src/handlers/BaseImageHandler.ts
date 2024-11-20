@@ -11,7 +11,7 @@ export abstract class BaseImageHandler {
   }
 
   protected resolveDestinationPath(destinationPath?: string): string {
-    const resolvedPath = 'public/'+destinationPath || this.defaultUploadsDir;
+    const resolvedPath = destinationPath || this.defaultUploadsDir;
     ensureDirectory(resolvedPath);
     return resolvedPath;
   }

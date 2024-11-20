@@ -22,7 +22,7 @@ class BaseImageHandler {
         (0, ensureDirectory_1.ensureDirectory)(this.defaultUploadsDir);
     }
     resolveDestinationPath(destinationPath) {
-        const resolvedPath = 'public/' + destinationPath || this.defaultUploadsDir;
+        const resolvedPath = destinationPath || this.defaultUploadsDir;
         (0, ensureDirectory_1.ensureDirectory)(resolvedPath);
         return resolvedPath;
     }
