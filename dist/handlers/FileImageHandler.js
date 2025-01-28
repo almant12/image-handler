@@ -27,19 +27,22 @@ class FileImageHandler extends BaseImageHandler_1.BaseImageHandler {
             const arrayBuffer = yield image.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
             fs_1.default.writeFileSync(filePath, buffer);
-            return path_1.default.relative(path_1.default.join(process.cwd(), 'public'), filePath);
+            // Ensure that the returned path uses forward slashes
+            const relativePath = path_1.default.relative(path_1.default.join(process.cwd(), 'public'), filePath);
+            // Replace backslashes with forward slashes for compatibility
+            return '/' + relativePath.replace(/\\/g, '/');
         });
     }
-    /**
-   * Saves multiple images to the destination path.
-   * @param images An array of File objects to save.
-   * @param destinationPath The path where the images will be saved.
-   * @returns An array of relative file paths for the saved images.
-   */
     saveMultiple(images, destinationPath) {
         return __awaiter(this, void 0, void 0, function* () {
+            // Ensure images is an array and not null or undefined
+            const filesArray = Array.isArray(images) ? images : (images ? [images] : []);
+            // If no valid images, throw an error or handle it accordingly
+            if (filesArray.length === 0) {
+                throw new Error("No valid images provided");
+            }
             const savedPaths = [];
-            for (const image of images) {
+            for (const image of filesArray) {
                 const savedPath = yield this.save(image, destinationPath);
                 savedPaths.push(savedPath);
             }
