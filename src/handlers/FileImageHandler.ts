@@ -26,16 +26,20 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
    * @param destinationPath The path where the images will be saved.
    * @returns An array of relative file paths for the saved images.
    */
-    async saveMultiple(images: File[], destinationPath?: string): Promise<string[]> {
+    async saveMultiple(images: File | File[], destinationPath?: string): Promise<string[]> {
+      // Normalize input to an array
+      const filesArray = Array.isArray(images) ? images : [images];
+    
       const savedPaths: string[] = [];
-  
-      for (const image of images) {
+    
+      for (const image of filesArray) {
         const savedPath = await this.save(image, destinationPath);
         savedPaths.push(savedPath);
       }
-  
+    
       return savedPaths;
     }
+  
 
   async update(image: File, oldPath: string, destinationPath?: string): Promise<string> {
     await this.delete(oldPath);
