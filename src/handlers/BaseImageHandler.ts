@@ -16,7 +16,6 @@ export abstract class BaseImageHandler {
     return resolvedPath;
   }
 
-  abstract save(image: File | string, destinationPath?: string): Promise<string>;
 
   async delete(filePath: string): Promise<void> {
     const absolutePath = path.join(process.cwd(), filePath);

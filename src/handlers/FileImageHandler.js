@@ -30,6 +30,22 @@ class FileImageHandler extends BaseImageHandler_1.BaseImageHandler {
             return path_1.default.relative(path_1.default.join(process.cwd(), 'public'), filePath);
         });
     }
+    /**
+   * Saves multiple images to the destination path.
+   * @param images An array of File objects to save.
+   * @param destinationPath The path where the images will be saved.
+   * @returns An array of relative file paths for the saved images.
+   */
+    saveMultiple(images, destinationPath) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const savedPaths = [];
+            for (const image of images) {
+                const savedPath = yield this.save(image, destinationPath);
+                savedPaths.push(savedPath);
+            }
+            return savedPaths;
+        });
+    }
     update(image, oldPath, destinationPath) {
         return __awaiter(this, void 0, void 0, function* () {
             yield this.delete(oldPath);

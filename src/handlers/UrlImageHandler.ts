@@ -4,7 +4,7 @@ import { BaseImageHandler } from './BaseImageHandler';
 import { ImageHandler } from './ImageHandler';
 import { generateFilename } from '../utils/generateFilename';
 
-export class UrlImageHandler extends BaseImageHandler implements ImageHandler {
+export class UrlImageHandler extends BaseImageHandler {
   async save(imageUrl: string, destinationPath?: string): Promise<string> {
     const uploadsDir = this.resolveDestinationPath(destinationPath);
     const ext = '.jpg';

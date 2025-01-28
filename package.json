@@ -1,11 +1,14 @@
 {
-  "name": "image-handler-almant",
+  "name": "light-image-handler",
   "version": "2.0.6",
   "main": "index.js",
   "scripts": {
     "build": "tsc",
     "test": "ts-node index.js"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
