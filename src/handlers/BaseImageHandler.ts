@@ -11,14 +11,14 @@ export abstract class BaseImageHandler {
   }
 
   protected resolveDestinationPath(destinationPath?: string): string {
-    const resolvedPath = destinationPath || this.defaultUploadsDir;
+    const resolvedPath = this.defaultUploadsDir+'/'+destinationPath
     ensureDirectory(resolvedPath);
     return resolvedPath;
   }
 
 
   async delete(filePath: string): Promise<void> {
-    const absolutePath = path.join(process.cwd(), filePath);
+    const absolutePath = path.join(process.cwd(), 'public', filePath);
     if (fs.existsSync(absolutePath)) {
       fs.unlinkSync(absolutePath);
     }

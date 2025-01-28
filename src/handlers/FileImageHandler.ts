@@ -17,33 +17,29 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
     
 
     fs.writeFileSync(filePath, buffer);
-   // Ensure that the returned path uses forward slashes
-   const relativePath = path.relative(path.join(process.cwd(), 'public'), filePath);
-    
-   // Replace backslashes with forward slashes for compatibility
-   return '/'+relativePath.replace(/\\/g, '/');
+    return path.relative(path.join(process.cwd(), 'public'), filePath);
   }
 
-  async saveMultiple(images: File | File[], destinationPath?: string): Promise<string[]> {
-    // Ensure images is an array and not null or undefined
-    const filesArray = Array.isArray(images) ? images : (images ? [images] : []);
+    /**
+   * Saves multiple images to the destination path.
+   * @param images An array of File objects to save.
+   * @param destinationPath The path where the images will be saved.
+   * @returns An array of relative file paths for the saved images.
+   */
+    async saveMultiple(images: File | File[], destinationPath?: string): Promise<string[]> {
+      // Normalize input to an array
+      const filesArray = Array.isArray(images) ? images : [images];
     
-    // If no valid images, throw an error or handle it accordingly
-    if (filesArray.length === 0) {
-      throw new Error("No valid images provided");
+      const savedPaths: string[] = [];
+    
+      for (const image of filesArray) {
+        const savedPath = await this.save(image, destinationPath);
+        savedPaths.push(savedPath);
+      }
+    
+      return savedPaths;
     }
-  
-    const savedPaths: string[] = [];
-  
-    for (const image of filesArray) {
-      const savedPath = await this.save(image, destinationPath);
-      savedPaths.push(savedPath);
-    }
-  
-    return savedPaths;
-  }
 
-  
   async update(image: File, oldPath: string, destinationPath?: string): Promise<string> {
     await this.delete(oldPath);
     return this.save(image, destinationPath);
