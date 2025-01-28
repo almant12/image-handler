@@ -17,7 +17,12 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
     
 
     fs.writeFileSync(filePath, buffer);
-    return path.relative(path.join(process.cwd(), 'public'), filePath);
+    
+   // Ensure that the returned path uses forward slashes
+   const relativePath = path.relative(path.join(process.cwd(), 'public'), filePath);
+    
+   // Replace backslashes with forward slashes for compatibility
+   return '/'+relativePath.replace(/\\/g, '/');
   }
 
     /**
