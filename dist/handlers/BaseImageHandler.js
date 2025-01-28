@@ -22,13 +22,13 @@ class BaseImageHandler {
         (0, ensureDirectory_1.ensureDirectory)(this.defaultUploadsDir);
     }
     resolveDestinationPath(destinationPath) {
-        const resolvedPath = destinationPath || this.defaultUploadsDir;
+        const resolvedPath = this.defaultUploadsDir + '/' + destinationPath;
         (0, ensureDirectory_1.ensureDirectory)(resolvedPath);
         return resolvedPath;
     }
     delete(filePath) {
         return __awaiter(this, void 0, void 0, function* () {
-            const absolutePath = path_1.default.join(process.cwd(), filePath);
+            const absolutePath = path_1.default.join(process.cwd(), 'public', filePath);
             if (fs_1.default.existsSync(absolutePath)) {
                 fs_1.default.unlinkSync(absolutePath);
             }

@@ -33,14 +33,16 @@ class FileImageHandler extends BaseImageHandler_1.BaseImageHandler {
             return '/' + relativePath.replace(/\\/g, '/');
         });
     }
+    /**
+   * Saves multiple images to the destination path.
+   * @param images An array of File objects to save.
+   * @param destinationPath The path where the images will be saved.
+   * @returns An array of relative file paths for the saved images.
+   */
     saveMultiple(images, destinationPath) {
         return __awaiter(this, void 0, void 0, function* () {
-            // Ensure images is an array and not null or undefined
-            const filesArray = Array.isArray(images) ? images : (images ? [images] : []);
-            // If no valid images, throw an error or handle it accordingly
-            if (filesArray.length === 0) {
-                throw new Error("No valid images provided");
-            }
+            // Normalize input to an array
+            const filesArray = Array.isArray(images) ? images : [images];
             const savedPaths = [];
             for (const image of filesArray) {
                 const savedPath = yield this.save(image, destinationPath);
