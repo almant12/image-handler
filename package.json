@@ -1,7 +1,8 @@
 {
   "name": "light-image-handler",
   "version": "2.0.9",
-  "main": "index.js",
+  "main": "dist/index.js",       // The compiled JS entry file
+  "types": "dist/index.d.ts",     // The type declarations for TS users
   "scripts": {
     "build": "tsc",
     "test": "ts-node index.js"
