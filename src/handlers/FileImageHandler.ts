@@ -25,8 +25,13 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
   }
 
   async saveMultiple(images: File | File[], destinationPath?: string): Promise<string[]> {
-    // Normalize input to an array
-    const filesArray = Array.isArray(images) ? images : [images];
+    // Ensure images is an array and not null or undefined
+    const filesArray = Array.isArray(images) ? images : (images ? [images] : []);
+    
+    // If no valid images, throw an error or handle it accordingly
+    if (filesArray.length === 0) {
+      throw new Error("No valid images provided");
+    }
   
     const savedPaths: string[] = [];
   
@@ -38,6 +43,7 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
     return savedPaths;
   }
 
+  
   async update(image: File, oldPath: string, destinationPath?: string): Promise<string> {
     await this.delete(oldPath);
     return this.save(image, destinationPath);
