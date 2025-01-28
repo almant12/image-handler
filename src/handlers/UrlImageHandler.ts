@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import { BaseImageHandler } from './BaseImageHandler';
-import { ImageHandler } from './ImageHandler';
 import { generateFilename } from '../utils/generateFilename';
 
 export class UrlImageHandler extends BaseImageHandler {
