@@ -4,7 +4,6 @@ import { BaseImageHandler } from "./BaseImageHandler";
 import { generateFilename } from "../utils/generateFilename";
 
 export class UrlImageHandler extends BaseImageHandler {
-  
   async save(imageUrl: string, destinationPath?: string): Promise<string> {
     const uploadsDir = this.resolveDestinationPath(destinationPath);
 
@@ -23,7 +22,14 @@ export class UrlImageHandler extends BaseImageHandler {
     const buffer = Buffer.from(arrayBuffer);
 
     fs.writeFileSync(filePath, buffer);
-    return path.relative(path.join(process.cwd(), "public"), filePath);
+    // Ensure that the returned path uses forward slashes
+    const relativePath = path.relative(
+      path.join(process.cwd(), "public"),
+      filePath
+    );
+
+    // Replace backslashes with forward slashes for compatibility
+    return "/" + relativePath.replace(/\\/g, "/");
   }
 
   async update(
