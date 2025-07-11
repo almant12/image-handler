@@ -21,7 +21,8 @@ class UrlImageHandler extends BaseImageHandler_1.BaseImageHandler {
     save(imageUrl, destinationPath) {
         return __awaiter(this, void 0, void 0, function* () {
             const uploadsDir = this.resolveDestinationPath(destinationPath);
-            const ext = '.jpg';
+            const urlPath = new URL(imageUrl).pathname;
+            const ext = path_1.default.extname(urlPath) || ".jpg"; // get extension from URL
             const filename = (0, generateFilename_1.generateFilename)(ext);
             const filePath = path_1.default.join(uploadsDir, filename);
             const response = yield fetch(imageUrl);
@@ -31,7 +32,7 @@ class UrlImageHandler extends BaseImageHandler_1.BaseImageHandler {
             const arrayBuffer = yield response.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
             fs_1.default.writeFileSync(filePath, buffer);
-            return path_1.default.relative(path_1.default.join(process.cwd(), 'public'), filePath);
+            return path_1.default.relative(path_1.default.join(process.cwd(), "public"), filePath);
         });
     }
     update(imageUrl, oldPath, destinationPath) {
