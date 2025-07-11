@@ -32,7 +32,10 @@ class UrlImageHandler extends BaseImageHandler_1.BaseImageHandler {
             const arrayBuffer = yield response.arrayBuffer();
             const buffer = Buffer.from(arrayBuffer);
             fs_1.default.writeFileSync(filePath, buffer);
-            return path_1.default.relative(path_1.default.join(process.cwd(), "public"), filePath);
+            // Ensure that the returned path uses forward slashes
+            const relativePath = path_1.default.relative(path_1.default.join(process.cwd(), "public"), filePath);
+            // Replace backslashes with forward slashes for compatibility
+            return "/" + relativePath.replace(/\\/g, "/");
         });
     }
     update(imageUrl, oldPath, destinationPath) {
