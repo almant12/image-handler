@@ -8,6 +8,7 @@ export class FileImageHandler extends BaseImageHandler implements ImageHandler {
     
   async save(image: File, destinationPath?: string): Promise<string> {
     const uploadsDir = this.resolveDestinationPath(destinationPath);
+    
     const ext = path.extname(image.name);
     const filename = generateFilename(ext);
 

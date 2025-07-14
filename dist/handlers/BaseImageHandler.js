@@ -18,17 +18,19 @@ const path_1 = __importDefault(require("path"));
 const ensureDirectory_1 = require("../utils/ensureDirectory");
 class BaseImageHandler {
     constructor() {
-        this.defaultUploadsDir = path_1.default.join(process.cwd(), 'public');
+        this.defaultUploadsDir = path_1.default.join(process.cwd(), "public");
         (0, ensureDirectory_1.ensureDirectory)(this.defaultUploadsDir);
     }
     resolveDestinationPath(destinationPath) {
-        const resolvedPath = this.defaultUploadsDir + '/' + destinationPath;
+        const resolvedPath = destinationPath
+            ? path_1.default.join(this.defaultUploadsDir, destinationPath)
+            : this.defaultUploadsDir;
         (0, ensureDirectory_1.ensureDirectory)(resolvedPath);
         return resolvedPath;
     }
     delete(filePath) {
         return __awaiter(this, void 0, void 0, function* () {
-            const absolutePath = path_1.default.join(process.cwd(), 'public', filePath);
+            const absolutePath = path_1.default.join(process.cwd(), "public", filePath);
             if (fs_1.default.existsSync(absolutePath)) {
                 fs_1.default.unlinkSync(absolutePath);
             }
